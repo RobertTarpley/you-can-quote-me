@@ -1,0 +1,115 @@
+:root {
+  --bg: #0a0a0a;
+  --panel: #111111;
+  --ink: #f5f5f5;
+  --muted: #bcbcbc;
+  --line: #1f1f1f;
+  --accent: #f5f5f5;
+  --shadow: rgba(0,0,0,0.4);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+}
+.wrap {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 16px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px var(--shadow);
+  overflow: hidden;
+}
+header {
+  padding: 16px 16px 8px;
+  border-bottom: 1px solid var(--line);
+}
+h1 {
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+}
+.sub {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 16px 16px;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+.ctrl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #0c0c0c;
+}
+label { color: var(--muted); font-size: 12px; }
+select, input[type="text"] {
+  background: #0c0c0c;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+input[type="checkbox"] { accent-color: var(--accent); }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 16px;
+}
+textarea {
+  width: 100%;
+  min-height: 380px;
+  resize: vertical;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #0c0c0c;
+  color: var(--ink);
+  outline: none;
+}
+textarea:focus {
+  border-color: #f0f0f0;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
+}
+.actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+button {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: #121212;
+  color: var(--ink);
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+button:hover { background: #1a1a1a; }
+.status {
+  padding: 0 16px 14px;
+  color: var(--muted);
+  font-size: 12px;
+  min-height: 16px;
+}
+.hidden { display: none; }
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+  textarea { min-height: 240px; }
+  .actions { width: 100%; margin-left: 0; justify-content: space-between; }
+}

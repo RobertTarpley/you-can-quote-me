@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SQL Quoter</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <h1>SQL Quoter</h1>
+        <div class="sub">Paste lines and build IN lists or AND/OR predicates.</div>
+      </header>
+
+      <div class="controls">
+        <div class="ctrl">
+          <label for="mode">Mode</label>
+          <select id="mode">
+            <option value="in">IN</option>
+            <option value="logic">AND/OR</option>
+          </select>
+        </div>
+
+        <div class="ctrl" id="joinerWrap">
+          <label for="joiner">Joiner</label>
+          <select id="joiner">
+            <option value="AND">AND</option>
+            <option value="OR">OR</option>
+          </select>
+        </div>
+
+        <div class="ctrl">
+          <label for="column">Column(s)</label>
+          <input id="column" type="text" placeholder="col or c1,c2" />
+        </div>
+
+        <div class="ctrl" id="operatorWrap">
+          <label for="operator">Operator</label>
+          <select id="operator">
+            <option value="=">=</option>
+            <option value="!=">!=</option>
+            <option value="LIKE">LIKE</option>
+            <option value="ILIKE">ILIKE</option>
+          </select>
+        </div>
+
+        <div class="ctrl" id="inLayoutWrap">
+          <label for="inLayout">IN layout</label>
+          <select id="inLayout">
+            <option value="single">Single line</option>
+            <option value="multi">Multi-line</option>
+          </select>
+        </div>
+
+        <div class="ctrl" id="commaWrap">
+          <label for="comma">Commas</label>
+          <select id="comma">
+            <option value="trailing">Trailing</option>
+            <option value="leading">Leading</option>
+            <option value="none">None</option>
+          </select>
+        </div>
+
+        <div class="ctrl">
+          <label for="quote">Quote</label>
+          <select id="quote">
+            <option value="'">Single (')</option>
+            <option value="\"">Double (")</option>
+            <option value="`">Backtick (`)</option>
+            <option value="">None</option>
+          </select>
+        </div>
+
+        <div class="ctrl">
+          <label><input id="escapeSql" type="checkbox" checked> Escape ' as ''</label>
+        </div>
+
+        <div class="ctrl">
+          <label><input id="trim" type="checkbox" checked> Trim</label>
+        </div>
+
+        <div class="ctrl">
+          <label><input id="skipEmpty" type="checkbox" checked> Skip blanks</label>
+        </div>
+
+        <div class="actions">
+          <button id="copyBtn" type="button">Copy</button>
+          <button id="resetBtn" type="button">Reset settings</button>
+          <button id="clearBtn" type="button">Clear</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label for="input">Input</label>
+          <textarea id="input" placeholder="Paste values here (one per line)"></textarea>
+        </div>
+        <div>
+          <label for="output">Output</label>
+          <textarea id="output" readonly placeholder="Output appears here"></textarea>
+        </div>
+      </div>
+
+      <div class="status" id="status"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
