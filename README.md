@@ -2,7 +2,7 @@
 
 This is a small, static GitHub Pages app. It is plain HTML/CSS/JS with no build
 step.
-
+ 
 ## What It Does
 
 Turns raw lists into SQL-friendly quoted output so you can quickly build
