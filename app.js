@@ -29,8 +29,8 @@ function loadSettings() {
   try {
     const data = JSON.parse(localStorage.getItem(settingsKey) || "{}");
     Object.keys(data).forEach((key) => {
-      if (ui[key] && "value" in ui[key]) ui[key].value = data[key];
       if (ui[key] && ui[key].type === "checkbox") ui[key].checked = data[key];
+      else if (ui[key] && "value" in ui[key]) ui[key].value = data[key];
     });
   } catch (_) {}
 }
@@ -84,15 +84,17 @@ function parseLines() {
   return lines;
 }
 
-function escapeSqlSingleQuotes(s) {
-  return s.replace(/'/g, "''");
+function escapeQuoteChar(s, q) {
+  if (!q) return s;
+  const escaped = q === "'" ? "''" : "\\" + q;
+  return s.replace(new RegExp(q, "g"), escaped);
 }
 
 function applyQuotes(values) {
   const q = ui.quote.value;
   return values.map((raw) => {
     let s = raw;
-    if (ui.escapeSql.checked && q === "'") s = escapeSqlSingleQuotes(s);
+    if (ui.escapeSql.checked && q) s = escapeQuoteChar(s, q);
     return q ? (q + s + q) : s;
   });
 }
@@ -100,7 +102,26 @@ function applyQuotes(values) {
 function splitColumns(raw) {
   const trimmed = raw.trim();
   if (!trimmed) return [];
-  return trimmed.split(/[\s,]+/).filter(Boolean);
+  const cols = [];
+  let current = "";
+  let inQuote = null;
+  for (let i = 0; i < trimmed.length; i++) {
+    const ch = trimmed[i];
+    if (inQuote) {
+      current += ch;
+      if (ch === inQuote) inQuote = null;
+    } else if (ch === '"' || ch === "`" || ch === "[") {
+      inQuote = ch === "[" ? "]" : ch;
+      current += ch;
+    } else if (ch === "," || /\s/.test(ch)) {
+      if (current) cols.push(current);
+      current = "";
+    } else {
+      current += ch;
+    }
+  }
+  if (current) cols.push(current);
+  return cols;
 }
 
 function formatInList(quoted) {
@@ -112,7 +133,7 @@ function formatInList(quoted) {
   const lines = quoted.map((s, i) => {
     const isLast = i === quoted.length - 1;
     if (commaStyle === "trailing") return isLast ? s : (s + ",");
-    if (commaStyle === "leading") return isLast ? s : ("," + s);
+    if (commaStyle === "leading") return i === 0 ? s : ("," + s);
     return s;
   });
   return "(\n  " + lines.join("\n  ") + "\n)";
